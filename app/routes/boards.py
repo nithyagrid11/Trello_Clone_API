@@ -14,32 +14,6 @@ router = APIRouter(
     tags=["Boards"]
 )
 
-@router.post("/",response_model=BoardResponse)
-def create_board(
-    board: BoardCreate,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-
-    new_board = Board(
-        name=board.name,
-        description=board.description,
-        owner_id=current_user.id
-    )
-    db.add(new_board)
-    db.commit()
-    db.refresh(new_board)
-
-    owner_member = BoardMember(
-    board_id=new_board.id,
-    user_id=current_user.id,
-    role="owner"
-    )
-    db.add(owner_member)
-    db.commit()
-
-    return new_board
-
 @router.get("/", response_model=list[BoardResponse])
 def get_boards(
     db: Session = Depends(get_db),
@@ -75,6 +49,32 @@ def get_board_detail(
         )
 
     return board
+
+@router.post("/",response_model=BoardResponse)
+def create_board(
+    board: BoardCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+
+    new_board = Board(
+        name=board.name,
+        description=board.description,
+        owner_id=current_user.id
+    )
+    db.add(new_board)
+    db.commit()
+    db.refresh(new_board)
+
+    owner_member = BoardMember(
+    board_id=new_board.id,
+    user_id=current_user.id,
+    role="owner"
+    )
+    db.add(owner_member)
+    db.commit()
+
+    return new_board
 
 @router.post("/{board_id}/invite")
 def generate_invitation(

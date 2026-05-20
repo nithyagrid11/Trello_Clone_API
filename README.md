@@ -376,5 +376,3 @@ git push -u origin main
 * `GET /tickets/section/{section_id}`
 * `PUT /tickets/{ticket_id}`
 * `DELETE /tickets/{ticket_id}`
-
----
