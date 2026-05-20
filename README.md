@@ -298,23 +298,6 @@ Cannot:
 
 ---
 
-# Important Notes
-
-* Do not upload `.env` file
-* Do not upload virtual environment (`venv`)
-* Database tables are automatically created using SQLAlchemy
-* Tokens and testing data should not be committed to repository
-
----
-
-# Generate Requirements File
-
-```bash
-pip freeze > requirements.txt
-```
-
----
-
 # GitHub Push Instructions
 
 ## Initialize Git
@@ -395,12 +378,3 @@ git push -u origin main
 * `DELETE /tickets/{ticket_id}`
 
 ---
-
-# Future Improvements
-
-* Alembic Database Migrations
-* Pagination
-* Advanced Role Management
-* Real-time Notifications
-* Docker Deployment
-* Frontend Integration
