@@ -298,6 +298,12 @@ Cannot:
 
 ---
 
+# Generate Requirements File
+
+pip freeze > requirements.txt
+
+---
+
 # GitHub Push Instructions
 
 ## Initialize Git
