@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from app.schemas.board_member import BoardMemberResponse
 from app.schemas.section import SectionDetailResponse
 
-class Board(BaseModel):
+class BoardCreate(BaseModel):
     name: str
     description: str
 
