@@ -6,10 +6,6 @@ class Board(BaseModel):
     name: str
     description: str
 
-class BoardCreate(Board):
-    name: str
-    description: str
-
 class BoardResponse(BaseModel):
     id: int
     name: str

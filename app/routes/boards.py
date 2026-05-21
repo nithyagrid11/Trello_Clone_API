@@ -4,7 +4,7 @@ from app.dependencies.auth import get_current_user
 from app.dependencies.database import get_db
 from app.models.board import Board
 from app.models.user import User
-from app.schemas.board import (BoardCreate,BoardResponse)
+from app.schemas.board import *
 from app.schemas.board import BoardDetailResponse
 import secrets
 from app.models.board_member import BoardMember
