@@ -1,8 +1,8 @@
-# Trello Clone Backend API
+# Trello Backend API
 
 ## Overview
 
-This project is a Trello Clone Backend API built using FastAPI, SQLAlchemy, and MySQL.
+This project is a Trello Backend API built using FastAPI, SQLAlchemy, and MySQL.
 The application supports user authentication, board management, section management, ticket management, and invitation-based collaboration between users.
 
 The system allows:
