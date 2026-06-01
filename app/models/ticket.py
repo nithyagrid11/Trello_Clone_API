@@ -13,5 +13,3 @@ class Ticket(Base):
     assigned_user = relationship("User",foreign_keys=[assigned_user_id])
     created_by_id = Column(Integer,ForeignKey("users.id"))
     created_by = relationship("User",foreign_keys=[created_by_id])
-
-    

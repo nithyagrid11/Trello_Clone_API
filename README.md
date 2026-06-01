@@ -382,3 +382,172 @@ git push -u origin main
 * `GET /tickets/section/{section_id}`
 * `PUT /tickets/{ticket_id}`
 * `DELETE /tickets/{ticket_id}`
+
+# Testing
+
+This project includes both Unit Tests and Integration Tests to verify the correctness of utility functions, business logic, authentication, authorization, and API endpoints.
+
+## Testing Tools Used
+
+- Pytest
+- pytest-cov
+- FastAPI TestClient
+
+---
+
+## Test Database Setup
+
+Create a separate MySQL database for testing:
+
+```sql
+CREATE DATABASE webframeworks_test;
+```
+
+Ensure MySQL is running before executing the tests.
+
+---
+
+## Install Testing Dependencies
+
+```bash
+pip install pytest pytest-cov httpx
+```
+
+Or install all project dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Run All Tests
+
+```bash
+python -m pytest
+```
+
+---
+
+## Run Coverage Report
+
+```bash
+python -m pytest --cov=app --cov-report=term-missing
+```
+
+This command displays:
+
+- Total project coverage
+- File-wise coverage
+- Missing lines that are not covered by tests
+
+---
+
+## Unit Tests
+
+The following files contain unit tests:
+
+```text
+app/tests/unit/test_password.py
+app/tests/unit/test_jwt.py
+app/tests/unit/test_permissions.py
+```
+
+### Covered Functions
+
+- Password hashing
+- Password verification
+- JWT token generation
+- JWT payload validation
+- Ticket permission validation
+
+---
+
+## Integration Tests
+
+The following files contain integration tests:
+
+```text
+app/tests/integration/tests_auth_routes.py
+app/tests/integration/test_user_routes.py
+app/tests/integration/test_boards_route.py
+app/tests/integration/test_section_route.py
+app/tests/integration/test_tickets_route.py
+```
+
+### Covered Endpoints
+
+Authentication:
+- POST /auth/register
+- POST /auth/login
+
+Users:
+- GET /users/me
+
+Boards:
+- POST /boards
+
+Sections:
+- POST /sections
+
+Tickets:
+- POST /tickets
+
+---
+
+## Test Fixtures
+
+Shared test fixtures are defined in:
+
+```text
+app/tests/conftest.py
+```
+
+These fixtures:
+
+- Create a fresh test database session
+- Reset database tables before each test
+- Override FastAPI database dependency
+- Provide a reusable TestClient instance
+
+---
+
+## Current Coverage
+
+The project currently achieves over 80% total test coverage, exceeding the required minimum coverage of 50%.
+
+Example:
+
+```text
+TOTAL 81%
+```
+
+---
+
+## Running a Single Test File
+
+Examples:
+
+```bash
+python -m pytest app/tests/unit/test_password.py -v
+```
+
+```bash
+python -m pytest app/tests/unit/test_jwt.py -v
+```
+
+```bash
+python -m pytest app/tests/integration/tests_auth_routes.py -v
+```
+
+```bash
+python -m pytest app/tests/integration/test_boards_route.py -v
+```
+
+---
+
+## Notes
+
+- Unit tests validate individual functions in isolation.
+- Integration tests validate complete API workflows using FastAPI TestClient.
+- A dedicated test database is used to avoid affecting production data.
