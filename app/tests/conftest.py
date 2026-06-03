@@ -15,6 +15,7 @@ TestingSessionLocal = sessionmaker(
     autoflush=False,
     bind=engine
 )
+
 @pytest.fixture(scope="function")
 def db():
 
