@@ -7,9 +7,10 @@ from app.main import app
 from app.database import Base
 from app.dependencies.database import get_db
 
-TEST_DATABASE_URL = ("mysql+pymysql://root:nithya11@localhost/webframeworks_test")
+TEST_DATABASE_URL = ("sqlite:///./test.db")
 
-engine = create_engine(TEST_DATABASE_URL)
+# Use SQLite for tests to avoid requiring an external DB service.
+engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
