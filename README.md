@@ -79,8 +79,9 @@ DATABASE_URL=postgresql://postgres:postgres@db:5432/task_management
 SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-CREATE_TABLES=1
 ```
+
+Database tables are created automatically when the app starts.
 
 ---
 

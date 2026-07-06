@@ -48,7 +48,17 @@ def create_ticket(
         status_code=403,
         detail="Not authorized"
      )
-    
+
+    if ticket.assigned_user_id is not None:
+        assignee = db.query(User).filter(
+            User.id == ticket.assigned_user_id
+        ).first()
+        if not assignee:
+            raise HTTPException(
+                status_code=404,
+                detail="Assigned user not found"
+            )
+
     new_ticket = Ticket(
         name=ticket.name,
         description=ticket.description,
@@ -128,6 +138,12 @@ def update_ticket(
         Section.id == ticket_data.section_id
     ).first()
 
+    if not new_section:
+        raise HTTPException(
+            status_code=404,
+            detail="Section not found"
+        )
+
     old_board = db.query(Board).filter(
         Board.id == old_section.board_id
     ).first()
@@ -137,6 +153,16 @@ def update_ticket(
             status_code=400,
             detail="Cannot move ticket to different board"
         )
+
+    if ticket_data.assigned_user_id is not None:
+        assignee = db.query(User).filter(
+            User.id == ticket_data.assigned_user_id
+        ).first()
+        if not assignee:
+            raise HTTPException(
+                status_code=404,
+                detail="Assigned user not found"
+            )
 
     ticket.name = ticket_data.name
     ticket.description = ticket_data.description

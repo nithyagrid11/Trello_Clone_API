@@ -3,10 +3,8 @@ from sqlalchemy.orm import Session
 from app.dependencies.auth import get_current_user
 from app.dependencies.database import get_db
 from app.models.board import Board
-from app.models.board import Board
 from app.schemas.board import (BoardCreate,BoardResponse,BoardDetailResponse)
 from app.models.user import User
-from app.schemas.board import BoardDetailResponse
 import secrets
 from app.models.board_member import BoardMember
 
@@ -21,8 +19,13 @@ def get_boards(
     current_user: User = Depends(get_current_user)
 ):
 
+    member_board_ids = db.query(BoardMember.board_id).filter(
+        BoardMember.user_id == current_user.id
+    )
+
     boards = db.query(Board).filter(
-        Board.owner_id == current_user.id
+        (Board.owner_id == current_user.id)
+        | (Board.id.in_(member_board_ids))
     ).all()
 
     return boards
@@ -43,7 +46,13 @@ def get_board_detail(
             status_code=404,
             detail="Board not found"
         )
-    if board.owner_id != current_user.id:
+
+    member = db.query(BoardMember).filter(
+        BoardMember.board_id == board.id,
+        BoardMember.user_id == current_user.id
+    ).first()
+
+    if board.owner_id != current_user.id and not member:
         raise HTTPException(
             status_code=403,
             detail="Not authorized"

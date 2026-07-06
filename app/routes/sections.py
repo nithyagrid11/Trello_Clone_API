@@ -4,6 +4,7 @@ from app.dependencies.auth import get_current_user
 from app.dependencies.database import get_db
 from app.models.section import Section
 from app.models.board import Board
+from app.models.board_member import BoardMember
 from app.models.user import User
 from app.schemas.section import (SectionCreate, SectionResponse)
 
@@ -61,7 +62,12 @@ def get_sections(
             detail="Board not found"
         )
 
-    if board.owner_id != current_user.id:
+    member = db.query(BoardMember).filter(
+        BoardMember.board_id == board.id,
+        BoardMember.user_id == current_user.id
+    ).first()
+
+    if board.owner_id != current_user.id and not member:
         raise HTTPException(
             status_code=403,
             detail="Not authorized"
